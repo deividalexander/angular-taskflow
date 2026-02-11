@@ -1,0 +1,20 @@
+<p>task-filters works!</p>
+<div class="filters-container">
+  <input 
+    type="text" 
+    [formControl]="searchControl" 
+    placeholder="Buscar tarea..." 
+    class="search-input"
+  />
+
+  <select (change)="onStatusChange($event)" class="filter-select">
+    <option value="all">Todas</option>
+    <option value="completed">Completadas</option>
+    <option value="pending">Pendientes</option>
+  </select>
+
+  <select (change)="onSortChange($event)" class="filter-select">
+    <option value="title">Ordenar por Título</option>
+    <option value="date">Ordenar por Fecha</option>
+  </select>
+</div>

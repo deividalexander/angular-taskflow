@@ -1,0 +1,37 @@
+$font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+
+// Colors
+$primary-color: #3f51b5;
+$secondary-color: #f50057;
+$bg-color: #f4f7f6;
+$text-color: #333;
+$error-color: #ef5350;
+
+// Spacing
+$spacing-sm: 0.5rem;
+$spacing-md: 1rem;
+$spacing-lg: 2rem;
+
+// Breakpoints
+$breakpoint-mobile: 768px;
+$breakpoint-tablet: 1024px;
+
+$bg-blue-primary: #0a192f; 
+$circle-blue-1: rgba(63, 81, 181, 0.25);
+$circle-blue-2: rgba(33, 150, 243, 0.2);  
+$circle-blue-3: rgba(13, 71, 161, 0.15);
+
+
+@mixin responsive-grid($cols-mobile, $cols-tablet, $cols-desktop) {
+  display: grid;
+  gap: $spacing-md;
+  grid-template-columns: repeat($cols-mobile, 1fr);
+
+  @media (min-width: #{$breakpoint-mobile}) {
+    grid-template-columns: repeat($cols-tablet, 1fr);
+  }
+
+  @media (min-width: #{$breakpoint-tablet}) {
+    grid-template-columns: repeat($cols-desktop, 1fr);
+  }
+}

@@ -1,0 +1,26 @@
+// Mixin para centrar contenido (Flexbox)
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// Mixin some shadows
+@mixin shadow-soft {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+
+@mixin responsive-grid($cols-mobile: 1, $cols-tablet: 2, $cols-desktop: 3) {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat($cols-mobile, 1fr);
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat($cols-tablet, 1fr);
+  }
+
+  @media (min-width: 1024px) {
+    grid-template-columns: repeat($cols-desktop, 1fr);
+  }
+}

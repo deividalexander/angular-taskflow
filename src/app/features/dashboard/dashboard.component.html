@@ -1,0 +1,55 @@
+<div class="dashboard-container">
+  
+  <header class="controls-header">
+    <input type="text" placeholder="Buscar tareas..." (input)="onSearchInput($event)">
+    
+    <select (change)="updateFilter($event)">
+      <option value="all">Todas</option>
+      <option value="pending">Pendientes</option>
+      <option value="completed">Completadas</option>
+    </select>
+
+    <select (change)="updateSort($event)">
+      <option value="title">Título (A-Z)</option>
+      <option value="dueDate">Fecha</option>
+    </select>
+  </header>
+
+  @if (store.error()) {
+    <div class="error-alert">
+      {{ store.error() }}
+      <button (click)="store.loadTasks()">Intentar de nuevo</button>
+    </div>
+  }
+
+  <main>
+    @if (store.loading()) {
+      <div class="tasks-grid">
+        @for (i of [1,2,3,4,5,6]; track i) {
+          <div class="skeleton-card">
+            <div class="skeleton-line title"></div>
+            <div class="skeleton-line subtitle"></div>
+          </div>
+        }
+      </div>
+    } @else {
+      <div class="tasks-grid">
+        @for (task of filteredAndPagedTasks(); track trackByTaskId($index, task)) {
+          <app-task-card 
+            [task]="task" 
+            (taskToggle)="onTaskToggle($event)" 
+            (taskDelete)="onTaskDelete($event)">
+          </app-task-card>
+        } @empty {
+          <p>No hay tareas que coincidan.</p>
+        }
+      </div>
+
+      <div class="pagination">
+        <button [disabled]="currentPage() === 1" (click)="changePage(currentPage() - 1)">Anterior</button>
+        <span>Página {{ currentPage() }} de {{ totalPages() }}</span>
+        <button [disabled]="currentPage() === totalPages()" (click)="changePage(currentPage() + 1)">Siguiente</button>
+      </div>
+    }
+  </main>
+</div>

@@ -1,0 +1,41 @@
+<article class="task-card" [ngClass]="[getPriorityClass(), task.completed ? 'is-completed' : '']">
+  <div class="card-body">
+    <div class="selection-area">
+      <input 
+        type="checkbox" 
+        [checked]="task.completed" 
+        (change)="onToggle()"
+        [id]="'check-' + task.id"
+        aria-label="Marcar tarea como completada">
+    </div>
+
+    <div class="content-area">
+      <div class="header-info">
+        <span class="user-badge">User #{{ task.userId }}</span>
+        @if (task.priority) {
+          <span class="priority-badge">{{ task.priority | uppercase }}</span>
+        }
+      </div>
+
+      <h3 class="task-title">{{ task.title }}</h3>
+
+      <div class="footer-info">
+        @if (task.dueDate) {
+          <span class="due-date">
+            📅 Vence: {{ task.dueDate | date:'mediumDate' }}
+          </span>
+        }
+      </div>
+    </div>
+  </div>
+
+  <div class="actions-area">
+    <button 
+      class="btn-delete" 
+      (click)="onDelete()" 
+      title="Eliminar tarea"
+      aria-label="Eliminar tarea">
+      <span class="icon">🗑️</span>
+    </button>
+  </div>
+</article>
