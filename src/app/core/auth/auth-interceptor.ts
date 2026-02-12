@@ -7,7 +7,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const authService = inject(AuthService);
   const token = authService.getToken();
 
-  // 1. Clonamos la petición para agregar el token si existe
+  // Clone the request to add the toke
   let authReq = req;
   if (token) {
     authReq = req.clone({
@@ -17,15 +17,15 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
     });
   }
 
-  // 2. Procesamos la petición y manejamos errores globales
+  // process the request and review global errors 
   return next(authReq).pipe(
     catchError((error: HttpErrorResponse) => {
-      // REQUISITO: Si recibimos un 401 (Unauthorized), forzamos el cierre de sesión
+      // in case received a 401, force to quit the session 
       if (error.status === 401) {
         authService.logout();
       }
       
-      // Propagamos el error para que el componente (como el Dashboard) pueda mostrar un mensaje si quiere
+      // Propagate the error in all the application
       return throwError(() => error);
     })
   );
